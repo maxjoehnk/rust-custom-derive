@@ -858,7 +858,7 @@ pub struct ParseEnumError(pub String);
 
 impl fmt::Display for ParseEnumError {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-        write!(fmt, "provided string did not match any enum variant")
+        write!(fmt, "provided string {} did not match any enum variant", self.0)
     }
 }
 
