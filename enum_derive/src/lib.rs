@@ -189,7 +189,7 @@ fn from_troll(s: &str) -> Result<u32, enum_derive::ParseEnumError> {
         };
     }
     if n == 0 {
-        Err(enum_derive::ParseEnumError)
+        Err(enum_derive::ParseEnumError(s.to_string()))
     } else {
         Ok(n)
     }
@@ -784,8 +784,8 @@ macro_rules! EnumFromStr {
             impl ::std::str::FromStr for $name {
                 type Err = $crate::ParseEnumError;
 
-                fn from_str(_: &str) -> ::std::result::Result<Self, Self::Err> {
-                    Err($crate::ParseEnumError)
+                fn from_str(s: &str) -> ::std::result::Result<Self, Self::Err> {
+                    Err($crate::ParseEnumError(s.to_string()))
                 }
             }
         }
@@ -814,7 +814,7 @@ macro_rules! EnumFromStr {
             match $s {
                 $($body)*
                 stringify!($a) => ::std::result::Result::Ok($name::$a),
-                _ => ::std::result::Result::Err($crate::ParseEnumError)
+                _ => ::std::result::Result::Err($crate::ParseEnumError($s.to_string()))
             }
         }
     };
@@ -854,7 +854,7 @@ This is the error type used for derived implementations of `FromStr` for unitary
 See the crate documentation for the `EnumFromStr!` macro.
 */
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub struct ParseEnumError;
+pub struct ParseEnumError(pub String);
 
 impl fmt::Display for ParseEnumError {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), fmt::Error> {

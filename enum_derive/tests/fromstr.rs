@@ -33,7 +33,7 @@ fn test_next_variant() {
     assert_eq!("Up".parse(), Ok(Get::Up));
     assert_eq!("Down".parse(), Ok(Get::Down));
     assert_eq!("AllAround".parse(), Ok(Get::AllAround));
-    assert_eq!("Edgy".parse::<Degenerate>(), Err(ParseEnumError));
+    assert_eq!("Edgy".parse::<Degenerate>(), Err(ParseEnumError("Edgy".into())));
 
-    assert_eq!("Singularity".parse::<Degenerate>(), Err(ParseEnumError));
+    assert_eq!("Singularity".parse::<Degenerate>(), Err(ParseEnumError("Singularity".into())));
 }
